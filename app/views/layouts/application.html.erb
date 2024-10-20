@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for(:title) || "Paw Traits" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= yield :head %>
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+  <div class="brand">
+    <%= link_to 'Paw Traits', root_path, class: 'navbar-brand' %>
+  </div>
+
+
+  <ul class="navbar-links">
+    <li><%= link_to 'Home', root_path, class: 'nav-item' %></li>
+    <li><%= link_to 'Breeds', breeds_path, class: 'nav-item' %></li>
+    <li><%= link_to 'About', about_path, class: 'nav-item' %></li>
+  </ul>
+
+  <div class="search-bar">
+    <%= form_with url: search_path, method: :get, local: true do %>
+      <input type="text" name="query" placeholder="Search breeds..." class="search-input">
+      <button type="submit" class="search-button">Search</button>
+    <% end %>
+  </div>
+</nav>
+
+
+  <!-- Flash Messages -->
+  <% flash.each do |type, message| %>
+    <div class="flash <%= type %>"><%= message %></div>
+  <% end %>
+
+  <!-- Main Content -->
+  <div class="container">
+    <%= yield %>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Paw Traits. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

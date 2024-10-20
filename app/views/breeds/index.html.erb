@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title is-size-2">Dog Breeds</h1>
+    <div class="columns is-multiline">
+      <% @paginated_breeds.each_with_index do |breed, index| %>
+        <div class="column is-one-quarter">
+          <div class="box breed-box">
+            <div class="breed-header">
+              <p class="serial-number"><%= ((@current_page - 1) * 8) + (index + 1) %></p>
+              <figure class="image">
+                <img class="breed-image" src="<%= @breed_images[breed] %>" alt="<%= breed %>">
+              </figure>
+              <p class="breed-name"><%= breed.capitalize %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="pagination">
+      <%= paginate @paginated_breeds %>
+    </div>
+  </div>
+</section>
