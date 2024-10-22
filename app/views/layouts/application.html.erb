@@ -28,7 +28,7 @@
     <li><%= link_to 'Home', root_path, class: 'nav-item' %></li>
     <li><%= link_to 'Breeds', breeds_path, class: 'nav-item' %></li>
     <li><%= link_to 'Dogs', dogs_path, class: 'nav-item' %></li> <!-- New Link for Dogs -->
-    <li><%= link_to 'Sub Breeds', sub_breeds_path, class: 'nav-item' %></li> <!-- New Link for Sub Breeds -->
+    <li><%= link_to 'Sub Breeds', breed_sub_breeds_path(breed_id: 1), class: 'nav-item' %></li>
     <li><%= link_to 'About', about_path, class: 'nav-item' %></li>
   </ul>
 
