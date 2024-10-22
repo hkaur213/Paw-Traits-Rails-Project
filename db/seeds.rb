@@ -27,7 +27,7 @@ breeds.each do |breed, sub_breeds|
 
   # Create sub-breed records and store them in an array
   sub_breed_records = sub_breeds.map do |sub_breed|
-    SubBreed.create(name: sub_breed, breed: breed_record)
+    SubBreed.create(name: sub_breed, breed: breed_record, description: generate_dog_description)
   end
 
   # Seed dogs with images and descriptions

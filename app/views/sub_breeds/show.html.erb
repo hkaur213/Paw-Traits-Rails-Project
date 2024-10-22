@@ -3,5 +3,5 @@
 <div class="sub-breed-details">
   <strong>Breed:</strong> <%= @sub_breed.breed.name %> <br>
   <strong>Description:</strong> <%= @sub_breed.description %> <br>
-  <%= link_to 'Back to Sub-Breeds', sub_breeds_path, class: "back-link" %>
+  <%= link_to 'Back to Sub-Breeds', breed_sub_breeds_path(@sub_breed.breed_id), class: "back-link" %>
 </div>

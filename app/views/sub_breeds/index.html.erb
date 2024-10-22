@@ -6,10 +6,11 @@
       <div class="sub-breed-info">
         <strong>Name:</strong> <%= sub_breed.name %> <br>
         <strong>Breed:</strong> <%= sub_breed.breed.name %> <br>
-        <strong>Description:</strong> <%= sub_breed.description %> <br>
+        <!-- Use truncate to limit the description length -->
+        <strong>Description:</strong> <%= truncate(sub_breed.description, length: 50, separator: ' ') %> <br>
       </div>
 
-      <% if sub_breed.image.attached? %> <!-- Check if the image is attached -->
+      <% if sub_breed.image.attached? %>
         <div class="sub-breed-image">
           <%= image_tag sub_breed.image, alt: sub_breed.name, class: "sub-breed-img" %>
         </div>
