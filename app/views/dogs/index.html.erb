@@ -1,0 +1,23 @@
+<h1 class="title">All Dogs</h1>
+
+<div class="dogs-container">
+  <% @dogs.each do |dog| %>
+    <div class="dog-card">
+      <div class="dog-info">
+        <strong>Name:</strong> <%= dog.name %> <br>
+        <strong>Age:</strong> <%= dog.age %> years<br>
+        <strong>Breed:</strong> <%= dog.breed.name %> <br>
+        <% if dog.sub_breed.present? %>
+          <strong>Sub-Breed:</strong> <%= dog.sub_breed.name %> <br>
+        <% end %>
+        <strong>Description:</strong> <%= dog.description %> <br>
+      </div>
+
+      <% if dog.image.attached? %> <!-- Check if the image is attached -->
+        <div class="dog-image">
+          <%= image_tag dog.image, alt: dog.name, class: "dog-img" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

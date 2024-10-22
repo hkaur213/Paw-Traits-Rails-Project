@@ -1,0 +1,11 @@
+<h1><%= params[:id].capitalize %> Breeds</h1>
+<img src="<%= @breed_image %>" alt="<%= params[:id] %> image" />
+
+<h2>Sub-Breeds:</h2>
+<ul>
+  <% @sub_breeds.each do |sub_breed| %>
+    <li>
+      <%= link_to sub_breed.capitalize, [params[:id], sub_breed] %>
+    </li>
+  <% end %>
+</ul>

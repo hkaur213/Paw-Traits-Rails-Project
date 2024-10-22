@@ -226,3 +226,83 @@ footer {
 .breed-name {
   font-size: 1.4rem;
 }
+
+/* custom.css or dogs.css */
+.dogs-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Space around the cards */
+  padding: 20px;
+}
+
+.dog-card {
+  background-color: #f8f9fa; /* Light background */
+  border: 1px solid #ced4da; /* Border for cards */
+  border-radius: 8px; /* Rounded corners */
+  width: 300px; /* Fixed width for each card */
+  margin: 15px; /* Space between cards */
+  padding: 15px; /* Padding inside the card */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s; /* Animation for hover effect */
+}
+
+.dog-card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.dog-image {
+  text-align: center; /* Center the image */
+}
+
+.dog-img {
+  width: 100%; /* Full width for images */
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Cover to maintain aspect ratio */
+  border-radius: 5px; /* Rounded corners for images */
+}
+
+/* custom.css or sub_breeds.css */
+.sub-breeds-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Space around the cards */
+  padding: 20px;
+}
+
+.sub-breed-card {
+  background-color: #e9ecef; /* Light background for sub-breeds */
+  border: 1px solid #ced4da; /* Border for cards */
+  border-radius: 8px; /* Rounded corners */
+  width: 250px; /* Fixed width for each card */
+  margin: 15px; /* Space between cards */
+  padding: 15px; /* Padding inside the card */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.details-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.details-link:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #6c757d; /* Bootstrap secondary color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.back-link:hover {
+  background-color: #5a6268; /* Darker shade on hover */
+}

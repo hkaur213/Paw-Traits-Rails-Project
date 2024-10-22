@@ -1,0 +1,21 @@
+<h1 class="title">All Sub-Breeds</h1>
+
+<div class="sub-breeds-container">
+  <% @sub_breeds.each do |sub_breed| %>
+    <div class="sub-breed-card">
+      <div class="sub-breed-info">
+        <strong>Name:</strong> <%= sub_breed.name %> <br>
+        <strong>Breed:</strong> <%= sub_breed.breed.name %> <br>
+        <strong>Description:</strong> <%= sub_breed.description %> <br>
+      </div>
+
+      <% if sub_breed.image.attached? %> <!-- Check if the image is attached -->
+        <div class="sub-breed-image">
+          <%= image_tag sub_breed.image, alt: sub_breed.name, class: "sub-breed-img" %>
+        </div>
+      <% end %>
+
+      <%= link_to 'View Details', [sub_breed.breed, sub_breed], class: "details-link" %>
+    </div>
+  <% end %>
+</div>

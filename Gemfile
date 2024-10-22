@@ -5,6 +5,10 @@ gem "rails", "~> 7.2.1"
 gem 'httparty'
 gem 'bulma-rails'
 gem 'kaminari'
+gem 'faker'
+gem 'rest-client'
+gem 'mini_magick'
+
 
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
