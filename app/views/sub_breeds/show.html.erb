@@ -1,7 +1,18 @@
-<h1 class="title"><%= @sub_breed.name %></h1>
+<h1 class="title"><%= @sub_breed.name %> Details</h1>
 
 <div class="sub-breed-details">
-  <strong>Breed:</strong> <%= @sub_breed.breed.name %> <br>
-  <strong>Description:</strong> <%= @sub_breed.description %> <br>
+  <div class="sub-breed-info">
+    <strong>Breed:</strong> <%= @sub_breed.breed.name %> <br>
+    <strong>Description:</strong> <%= @sub_breed.description %> <br>
+  </div>
+
+  <% if @sub_breed.image.attached? %>
+    <div class="sub-breed-image">
+      <%= image_tag @sub_breed.image, alt: @sub_breed.name, class: "sub-breed-img" %>
+    </div>
+  <% else %>
+    <p>No image available for this sub-breed.</p>
+  <% end %>
+  
   <%= link_to 'Back to Sub-Breeds', breed_sub_breeds_path(@sub_breed.breed_id), class: "back-link" %>
 </div>

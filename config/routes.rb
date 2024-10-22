@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "pages/about"
   root 'home#index'
   
   get 'about', to: 'home#about'
