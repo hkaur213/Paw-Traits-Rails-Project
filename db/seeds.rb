@@ -13,7 +13,7 @@ def generate_dog_description
     "These dogs are often very loyal and protective of their owners.",
     "Their beautiful coat comes in various colors and patterns, making them quite unique."
   ]
-
+  
   sentences.sample(rand(3..4)).join(' ') # Randomly select 3-4 sentences and join them
 end
 
@@ -87,29 +87,37 @@ breeds.each do |breed, sub_breeds|
           # Attach the resized image to the dog
           dog.image.attach(io: resized_io, filename: io.original_filename, content_type: io.content_type)
           puts "Attached image to dog: #{dog.name}"
+
+          # Associate random traits with the dog
+          traits = ['Friendly', 'Playful', 'Loyal', 'Energetic', 'Protective', 'Calm']
+
+          # Create some traits if they don't exist
+          traits.each do |trait_name|
+            Trait.find_or_create_by(name: trait_name) do |trait|
+              puts "Creating trait: #{trait_name}" if trait.persisted?
+            end
+          end
+
+          # Now associate random traits with each dog
+          begin
+            selected_traits = Trait.order("RANDOM()").limit(rand(1..3)).pluck(:id)  # Get 1 to 3 random traits
+            selected_traits.each do |trait_id|
+              DogTrait.create!(dog_id: dog.id, trait_id: trait_id)
+              puts "Associated trait with dog: #{dog.name} - Trait ID: #{trait_id}"
+            end
+          rescue => e
+            puts "Error associating trait with dog #{dog.name}: #{e.message}"
+          end
+
         rescue => e
           puts "Error processing image for #{dog.name}: #{e.message}"
         end
+
       else
         puts "Failed to create dog: #{dog.name}. Errors: #{dog.errors.full_messages.join(', ')}"
       end
-    end  
+    end  # End of dog creation block
   else
     puts "Failed to create or find breed: #{breed}. Errors: #{breed_record.errors.full_messages.join(', ')}"
   end
-end
-
-traits_data = [
-  { name: "Friendly", description: "Good with children and other pets." },
-  { name: "Aggressive", description: "Protective of their territory." },
-  { name: "High Energy", description: "Needs a lot of exercise." },
-  { name: "Low Energy", description: "Prefers to relax at home." }
-]
-
-traits_data.each do |trait_attributes|
-  Trait.find_or_create_by(name: trait_attributes[:name]) do |trait|
-    trait.description = trait_attributes[:description]
-    puts "Creating trait: #{trait.name}"
-  end
-end
-
+end  # End of breeds.each block
