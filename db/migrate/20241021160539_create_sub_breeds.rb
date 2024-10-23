@@ -3,7 +3,7 @@ class CreateSubBreeds < ActiveRecord::Migration[7.2]
     create_table :sub_breeds do |t|
       t.string :name
       t.references :breed, null: false, foreign_key: true
-
+      t.text :description
       t.timestamps
     end
   end

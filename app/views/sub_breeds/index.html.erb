@@ -10,12 +10,6 @@
         <strong>Description:</strong> <%= truncate(sub_breed.description, length: 50, separator: ' ') %> <br>
       </div>
 
-      <% if sub_breed.image.attached? %>
-        <div class="sub-breed-image">
-          <%= image_tag sub_breed.image, alt: sub_breed.name, class: "sub-breed-img" %>
-        </div>
-      <% end %>
-
       <%= link_to 'View Details', [sub_breed.breed, sub_breed], class: "details-link" %>
     </div>
   <% end %>

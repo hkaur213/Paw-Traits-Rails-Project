@@ -1,0 +1,12 @@
+=> 
+[[31m[1m"[0m[31mactive_storage_blobs[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mbreeds[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mtraits[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mactive_storage_attachments[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mactive_storage_variant_records[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mdogs[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mdogs_traits[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mimages[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mschema_migrations[0m[31m[1m"[0m,
+ [31m[1m"[0m[31mar_internal_metadata[0m[31m[1m"[0m,
+ [31m[1m"[0m[31msub_breeds[0m[31m[1m"[0m]

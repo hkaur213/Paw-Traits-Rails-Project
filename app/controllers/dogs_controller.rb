@@ -1,6 +1,6 @@
 class DogsController < ApplicationController
     def index
-      @dogs = Dog.all
+      @dogs = Dog.includes(:traits).all
     end
   end
   

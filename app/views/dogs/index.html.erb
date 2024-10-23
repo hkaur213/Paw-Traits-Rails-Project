@@ -11,9 +11,19 @@
           <strong>Sub-Breed:</strong> <%= dog.sub_breed.name %> <br>
         <% end %>
         <strong>Description:</strong> <%= dog.description %> <br>
+        <strong>Traits:</strong> 
+        <% if dog.traits.any? %>
+          <ul>
+            <% dog.traits.each do |trait| %>
+              <li><%= trait.name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No traits available.</p>
+        <% end %>
       </div>
 
-      <% if dog.image.attached? %> <!-- Check if the image is attached -->
+      <% if dog.image.attached? %>
         <div class="dog-image">
           <%= image_tag dog.image, alt: dog.name, class: "dog-img" %>
         </div>

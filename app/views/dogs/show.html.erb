@@ -1,0 +1,17 @@
+<h2><%= @dog.name %></h2>
+<p>Breed: <%= @dog.breed.name %></p>
+<p>Sub-breed: <%= @dog.sub_breed&.name || 'No sub-breed' %></p>
+<p>Age: <%= @dog.age %> years</p>
+<p>Description: <%= @dog.description %></p>
+
+<!-- Display Traits -->
+<h3>Traits:</h3>
+<ul>
+  <% if @dog.traits.any? %>
+    <% @dog.traits.each do |trait| %>
+      <li><%= trait.name %></li>
+    <% end %>
+  <% else %>
+    <p>No traits available</p>
+  <% end %>
+</ul>

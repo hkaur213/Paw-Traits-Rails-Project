@@ -22,83 +22,94 @@ breed_data = HTTParty.get('https://dog.ceo/api/breeds/list/all')
 breeds = breed_data.parsed_response['message']
 
 breeds.each do |breed, sub_breeds|
-  # Create the main breed record
-  breed_record = Breed.create(name: breed)
-
-  # Create sub-breed records and store them in an array
-sub_breed_records = sub_breeds.map do |sub_breed|
-  sub_breed_record = SubBreed.create(name: sub_breed, breed: breed_record, description: generate_dog_description)
-
-  # Fetch and attach an image for each sub-breed
-  begin
-    sub_image_response = HTTParty.get("https://dog.ceo/api/breed/#{breed}/#{sub_breed}/images/random")
-    sub_image_url = sub_image_response.parsed_response['message']
-
-    # Attach the sub-breed image if it exists
-    if sub_breed_record.persisted? && sub_image_url
-      sub_image_file = HTTParty.get(sub_image_url)
-      io = StringIO.new(sub_image_file.body)
-      io.class.class_eval { attr_accessor :original_filename, :content_type }
-      io.original_filename = "#{sub_breed}.jpg"
-      io.content_type = 'image/jpg'
-
-      # Resize and attach the image (similar to dogs)
-      image = MiniMagick::Image.read(io)
-      image.resize "300x300"
-      resized_io = StringIO.new
-      image.write(resized_io)
-      resized_io.rewind
-
-      # Attach the resized image to the sub-breed
-      sub_breed_record.image.attach(io: resized_io, filename: io.original_filename, content_type: io.content_type)
-      puts "Attached image for sub-breed: #{sub_breed_record.name}"
-    else
-      puts "No image URL found for sub-breed: #{sub_breed}"
-    end
-  rescue => e
-    puts "Error processing image for sub-breed #{sub_breed}: #{e.message}"
+  # Create or find the main breed record
+  breed_record = Breed.find_or_create_by(name: breed) do |b|
+    puts "Creating breed: #{breed}"
   end
 
-  sub_breed_record
-end
+  # Ensure breed was created successfully
+  if breed_record.persisted?
+    puts "Successfully created or found breed: #{breed_record.name}"
 
-  # Seed dogs with images and descriptions
-  10.times do
-    image_response = HTTParty.get("https://dog.ceo/api/breed/#{breed}/images/random")
-    image_url = image_response.parsed_response['message']
-
-    # Randomly select a sub-breed if any exist
-    sub_breed_record = sub_breed_records.sample
-
-    dog = Dog.create(
-      name: Faker::Creature::Dog.name,
-      age: rand(1..15),
-      breed_id: breed_record.id,
-      sub_breed_id: sub_breed_record&.id,
-      description: generate_dog_description
-    )
-
-    # Attach image if the dog is persisted
-    if dog.persisted?
-      image_file = HTTParty.get(image_url)
-      io = StringIO.new(image_file.body)
-      io.class.class_eval { attr_accessor :original_filename, :content_type }
-      io.original_filename = "#{dog.name}.jpg"
-      io.content_type = 'image/jpg'
-
-      # Resize the image using MiniMagick
-      begin
-        image = MiniMagick::Image.read(io)
-        image.resize "300x300"
-        resized_io = StringIO.new
-        image.write(resized_io)
-        resized_io.rewind
-
-        # Attach the resized image to the dog
-        dog.image.attach(io: resized_io, filename: io.original_filename, content_type: io.content_type)
-      rescue => e
-        puts "Error processing image for #{dog.name}: #{e.message}"
+    # Create sub-breed records and store them in an array
+    sub_breed_records = []
+    
+    sub_breeds.each do |sub_breed|
+      description = generate_dog_description # Generate a description here
+      sub_breed_record = SubBreed.find_or_create_by(name: sub_breed, breed: breed_record) do |sb|
+        sb.description = description
+        puts "Creating sub-breed: #{sub_breed} for breed: #{breed} with description: #{description}"
       end
+
+      # Always update the description to ensure it's available for each sub-breed
+      if sub_breed_record.persisted?
+        sub_breed_record.update(description: description) if sub_breed_record.description.blank?
+        puts "Successfully created sub-breed: #{sub_breed_record.name} with description: #{sub_breed_record.description}"
+      else
+        puts "Failed to create sub-breed: #{sub_breed_record.name}. Errors: #{sub_breed_record.errors.full_messages.join(', ')}"
+      end
+
+      sub_breed_records << sub_breed_record
     end
-  end  
+
+    # Seed dogs with images and descriptions
+    10.times do
+      image_response = HTTParty.get("https://dog.ceo/api/breed/#{breed}/images/random")
+      image_url = image_response.parsed_response['message']
+
+      # Randomly select a sub-breed if any exist
+      sub_breed_record = sub_breed_records.sample
+
+      dog = Dog.create(
+        name: Faker::Creature::Dog.name,
+        age: rand(1..15),
+        breed_id: breed_record.id,
+        sub_breed_id: sub_breed_record&.id,
+        description: generate_dog_description # Generate a description for the dog
+      )
+
+      # Attach image if the dog is persisted
+      if dog.persisted?
+        image_file = HTTParty.get(image_url)
+        io = StringIO.new(image_file.body)
+        io.class.class_eval { attr_accessor :original_filename, :content_type }
+        io.original_filename = "#{dog.name}.jpg"
+        io.content_type = 'image/jpg'
+
+        # Resize the image using MiniMagick
+        begin
+          image = MiniMagick::Image.read(io)
+          image.resize "300x300"
+          resized_io = StringIO.new
+          image.write(resized_io)
+          resized_io.rewind
+
+          # Attach the resized image to the dog
+          dog.image.attach(io: resized_io, filename: io.original_filename, content_type: io.content_type)
+          puts "Attached image to dog: #{dog.name}"
+        rescue => e
+          puts "Error processing image for #{dog.name}: #{e.message}"
+        end
+      else
+        puts "Failed to create dog: #{dog.name}. Errors: #{dog.errors.full_messages.join(', ')}"
+      end
+    end  
+  else
+    puts "Failed to create or find breed: #{breed}. Errors: #{breed_record.errors.full_messages.join(', ')}"
+  end
 end
+
+traits_data = [
+  { name: "Friendly", description: "Good with children and other pets." },
+  { name: "Aggressive", description: "Protective of their territory." },
+  { name: "High Energy", description: "Needs a lot of exercise." },
+  { name: "Low Energy", description: "Prefers to relax at home." }
+]
+
+traits_data.each do |trait_attributes|
+  Trait.find_or_create_by(name: trait_attributes[:name]) do |trait|
+    trait.description = trait_attributes[:description]
+    puts "Creating trait: #{trait.name}"
+  end
+end
+
