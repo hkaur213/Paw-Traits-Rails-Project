@@ -33,11 +33,12 @@
   </ul>
 
   <div class="search-bar">
-    <%= form_with url: search_path, method: :get, local: true do %>
-      <input type="text" name="query" placeholder="Search breeds..." class="search-input">
-      <button type="submit" class="search-button">Search</button>
-    <% end %>
-  </div>
+  <%= form_with url: dogs_path, method: :get, local: true do %>
+    <input type="text" name="dog_name" placeholder="Enter dog's name..." class="search-input">
+    <button type="submit" class="search-button">Search</button>
+  <% end %>
+</div>
+
 </nav>
 
   <!-- Flash Messages -->

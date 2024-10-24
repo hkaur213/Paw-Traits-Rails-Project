@@ -1,7 +1,5 @@
 require 'httparty'
 require 'faker'
-require 'stringio'
-require 'mini_magick'
 
 # Method to generate a random dog description
 def generate_dog_description
@@ -52,11 +50,8 @@ breeds.each do |breed, sub_breeds|
       sub_breed_records << sub_breed_record
     end
 
-    # Seed dogs with images and descriptions
+    # Seed dogs with descriptions
     10.times do
-      image_response = HTTParty.get("https://dog.ceo/api/breed/#{breed}/images/random")
-      image_url = image_response.parsed_response['message']
-
       # Randomly select a sub-breed if any exist
       sub_breed_record = sub_breed_records.sample
 
@@ -68,49 +63,26 @@ breeds.each do |breed, sub_breeds|
         description: generate_dog_description # Generate a description for the dog
       )
 
-      # Attach image if the dog is persisted
+      # Associate random traits with the dog
       if dog.persisted?
-        image_file = HTTParty.get(image_url)
-        io = StringIO.new(image_file.body)
-        io.class.class_eval { attr_accessor :original_filename, :content_type }
-        io.original_filename = "#{dog.name}.jpg"
-        io.content_type = 'image/jpg'
+        traits = ['Friendly', 'Playful', 'Loyal', 'Energetic', 'Protective', 'Calm']
 
-        # Resize the image using MiniMagick
+        # Create some traits if they don't exist
+        traits.each do |trait_name|
+          Trait.find_or_create_by(name: trait_name) do |trait|
+            puts "Creating trait: #{trait_name}" if trait.persisted?
+          end
+        end
+
+        # Now associate random traits with each dog
         begin
-          image = MiniMagick::Image.read(io)
-          image.resize "300x300"
-          resized_io = StringIO.new
-          image.write(resized_io)
-          resized_io.rewind
-
-          # Attach the resized image to the dog
-          dog.image.attach(io: resized_io, filename: io.original_filename, content_type: io.content_type)
-          puts "Attached image to dog: #{dog.name}"
-
-          # Associate random traits with the dog
-          traits = ['Friendly', 'Playful', 'Loyal', 'Energetic', 'Protective', 'Calm']
-
-          # Create some traits if they don't exist
-          traits.each do |trait_name|
-            Trait.find_or_create_by(name: trait_name) do |trait|
-              puts "Creating trait: #{trait_name}" if trait.persisted?
-            end
+          selected_traits = Trait.order("RANDOM()").limit(rand(1..3)).pluck(:id)  # Get 1 to 3 random traits
+          selected_traits.each do |trait_id|
+            DogTrait.create!(dog_id: dog.id, trait_id: trait_id)
+            puts "Associated trait with dog: #{dog.name} - Trait ID: #{trait_id}"
           end
-
-          # Now associate random traits with each dog
-          begin
-            selected_traits = Trait.order("RANDOM()").limit(rand(1..3)).pluck(:id)  # Get 1 to 3 random traits
-            selected_traits.each do |trait_id|
-              DogTrait.create!(dog_id: dog.id, trait_id: trait_id)
-              puts "Associated trait with dog: #{dog.name} - Trait ID: #{trait_id}"
-            end
-          rescue => e
-            puts "Error associating trait with dog #{dog.name}: #{e.message}"
-          end
-
         rescue => e
-          puts "Error processing image for #{dog.name}: #{e.message}"
+          puts "Error associating trait with dog #{dog.name}: #{e.message}"
         end
 
       else

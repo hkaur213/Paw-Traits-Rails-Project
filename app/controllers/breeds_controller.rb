@@ -1,5 +1,6 @@
 class BreedsController < ApplicationController
   def index
+    
     @breeds = HTTParty.get('https://dog.ceo/api/breeds/list/all')['message']
     @breed_images = {}
 
