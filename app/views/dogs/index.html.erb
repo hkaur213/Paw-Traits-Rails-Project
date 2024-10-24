@@ -1,29 +1,45 @@
 <h1 class="title">All Dogs</h1>
 
-<div class="dogs-container">
-  <% @dogs.each do |dog| %>
-    <div class="dog-card">
-      <div class="dog-info">
-        <strong>Name:</strong> <%= dog.name %> <br>
-        <strong>Age:</strong> <%= dog.age %> years<br>
-        <strong>Breed:</strong> <%= dog.breed.name %> <br>
-        <% if dog.sub_breed.present? %>
-          <strong>Sub-Breed:</strong> <%= dog.sub_breed.name %> <br>
-        <% end %>
-        <strong>Description:</strong> <%= dog.description %> <br>
-        <strong>Traits:</strong> 
-        <% if dog.traits.any? %>
-          <ul>
-            <% dog.traits.each do |trait| %>
-              <li><%= trait.name %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p>No traits available.</p>
-        <% end %>
-      </div>
+<!-- Search Form -->
+<%= form_with(url: dogs_path, method: :get, local: true) do %>
+  <div>
+    <%= label_tag :search, "Search by name:" %>
+    <%= text_field_tag :search, params[:search], placeholder: "Enter dog's name" %>
 
-    </div>
+    <%= label_tag :breed_id, "Filter by Breed:" %>
+    <%= select_tag :breed_id, options_from_collection_for_select(Breed.all, :id, :name, params[:breed_id]), include_blank: "All Breeds" %>
+
+    <%= submit_tag "Search" %>
+  </div>
+<% end %>
+
+<!-- Dogs Container -->
+<div class="dogs-container">
+  <% if @dogs.any? %>
+    <% @dogs.each do |dog| %>
+      <div class="dog-card">
+        <div class="dog-info">
+          <strong>Name:</strong> <%= dog.name %> <br>
+          <strong>Age:</strong> <%= dog.age %> years<br>
+          <strong>Breed:</strong> <%= dog.breed.name %> <br>
+          <% if dog.sub_breed.present? %>
+            <strong>Sub-Breed:</strong> <%= dog.sub_breed.name %> <br>
+          <% end %>
+          <strong>Description:</strong> <%= dog.description %> <br>
+          <strong>Traits:</strong> 
+          <% if dog.traits.any? %>
+            <ul>
+              <% dog.traits.each do |trait| %>
+                <li><%= trait.name %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>No traits available.</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No dogs found matching your criteria.</p>
   <% end %>
-  
 </div>
