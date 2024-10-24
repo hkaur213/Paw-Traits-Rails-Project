@@ -4,41 +4,37 @@ body {
   padding: 0;
 }
 
-/* Navbar styling */
 .navbar {
   background-color: #3498db;
   color: #fff;
-  padding: 15px 30px; /* Add padding for more space around the navbar content */
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Brand styling (left-aligned) */
 .navbar .brand {
   font-size: 1.5em;
   font-weight: bold;
   text-align: left;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
   color: #fff;
-  margin-right: 50px; /* Add some space between the brand and the nav links */
+  margin-right: 50px;
 }
 
-/* Center the navbar links */
 .navbar-links {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  flex-grow: 1; /* Ensures nav links take up central space */
+  flex-grow: 1;
 }
 
 .navbar-links li {
-  margin: 0 15px; /* Space between each nav link */
+  margin: 0 15px;
 }
 
-/* Styling for each navigation item */
 .nav-item {
   color: white;
   text-decoration: none;
@@ -49,7 +45,6 @@ body {
   text-decoration: underline;
 }
 
-/* Position search bar at the right end */
 .search-bar {
   display: flex;
   justify-content: flex-end;
@@ -62,7 +57,7 @@ body {
   border-radius: 3px;
   width: 250px;
   font-size: 1em;
-  margin-right: 10px; /* Space between input field and button */
+  margin-right: 10px;
 }
 
 .search-button {
@@ -79,13 +74,11 @@ body {
   background-color: #34495e;
 }
 
-/* Container styling */
 .container {
   width: 80%;
   margin: 0 auto;
 }
 
-/* Footer styling */
 footer {
   background-color: #333;
   color: #fff;
@@ -94,9 +87,8 @@ footer {
   margin-top: 50px;
 }
 
-/* Hero Section with large banner */
 .hero-section {
-  background-image: url('/path-to-your-background-image.jpg'); /* Use a high-quality background image */
+  background-image: url('/path-to-your-background-image.jpg');
   background-size: cover;
   background-position: center;
   height: 70vh;
@@ -109,7 +101,7 @@ footer {
 }
 
 .hero-content {
-  background-color: rgba(0, 0, 0, 0.5); /* Adds a transparent overlay to make the text readable */
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 30px;
   border-radius: 10px;
 }
@@ -140,7 +132,6 @@ footer {
   background-color: #e67e22;
 }
 
-/* Features Section */
 .features-section {
   padding: 50px 0;
   background-color: #f4f4f4;
@@ -179,7 +170,6 @@ footer {
   color: #333;
 }
 
-/* Footer */
 footer {
   background-color: #2c3e50;
   color: white;
@@ -187,33 +177,28 @@ footer {
   text-align: center;
 }
 
-/* Breed container for flexbox layout */
 .breed-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-/* Breed box styling */
 .breed-box {
   flex: 0 0 200px;
   display: flex;
   align-items: center;
 }
 
-/* Breed header with serial number, image, and name in a row */
 .breed-header {
   display: flex;
   align-items: center;
 }
 
-/* Serial number styling */
 .serial-number {
   font-size: 1.5rem;
   margin-right: 10px;
 }
 
-/* Breed image styling */
 .breed-image {
   width: 180px;
   height: 180px;
@@ -222,87 +207,84 @@ footer {
   margin-right: 10px;
 }
 
-/* Breed name styling */
 .breed-name {
   font-size: 1.4rem;
 }
 
-/* custom.css or dogs.css */
 .dogs-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Space around the cards */
+  justify-content: space-around;
   padding: 20px;
 }
 
 .dog-card {
-  background-color: #f8f9fa; /* Light background */
-  border: 1px solid #ced4da; /* Border for cards */
-  border-radius: 8px; /* Rounded corners */
-  width: 300px; /* Fixed width for each card */
-  margin: 15px; /* Space between cards */
-  padding: 15px; /* Padding inside the card */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: transform 0.2s; /* Animation for hover effect */
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  width: 300px;
+  margin: 15px; 
+  padding: 15px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .dog-card:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  transform: scale(1.05); 
 }
 
 .dog-image {
-  text-align: center; /* Center the image */
+  text-align: center; 
 }
 
 .dog-img {
-  width: 100%; /* Full width for images */
-  height: 200px; /* Fixed height */
-  object-fit: cover; /* Cover to maintain aspect ratio */
-  border-radius: 5px; /* Rounded corners for images */
+  width: 100%; 
+  height: 200px; 
+  object-fit: cover; 
+  border-radius: 5px; 
 }
 
-/* custom.css or sub_breeds.css */
 .sub-breeds-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Space around the cards */
+  justify-content: space-around;
   padding: 20px;
 }
 
 .sub-breed-card {
-  background-color: #e9ecef; /* Light background for sub-breeds */
-  border: 1px solid #ced4da; /* Border for cards */
-  border-radius: 8px; /* Rounded corners */
-  width: 250px; /* Fixed width for each card */
-  margin: 15px; /* Space between cards */
-  padding: 15px; /* Padding inside the card */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  width: 250px;
+  margin: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .details-link {
   display: inline-block;
   margin-top: 10px;
   padding: 5px 10px;
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #007bff;
   color: white;
   text-decoration: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
 }
 
 .details-link:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }
 
 .back-link {
   display: inline-block;
   margin-top: 10px;
   padding: 5px 10px;
-  background-color: #6c757d; /* Bootstrap secondary color */
+  background-color: #6c757d;
   color: white;
   text-decoration: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
 }
 
 .back-link:hover {
-  background-color: #5a6268; /* Darker shade on hover */
+  background-color: #5a6268;
 }
