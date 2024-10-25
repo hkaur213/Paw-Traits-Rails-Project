@@ -12,7 +12,7 @@ def generate_dog_description
     "Their beautiful coat comes in various colors and patterns, making them quite unique."
   ]
   
-  sentences.sample(rand(3..4)).join(' ') # Randomly select 3-4 sentences and join them
+  sentences.sample(rand(3..4)).join(' ') 
 end
 
 # Fetch breeds and sub-breeds from Dog CEO API
@@ -33,7 +33,7 @@ breeds.each do |breed, sub_breeds|
     sub_breed_records = []
     
     sub_breeds.each do |sub_breed|
-      description = generate_dog_description # Generate a description here
+      description = generate_dog_description 
       sub_breed_record = SubBreed.find_or_create_by(name: sub_breed, breed: breed_record) do |sb|
         sb.description = description
         puts "Creating sub-breed: #{sub_breed} for breed: #{breed} with description: #{description}"
@@ -60,7 +60,7 @@ breeds.each do |breed, sub_breeds|
         age: rand(1..15),
         breed_id: breed_record.id,
         sub_breed_id: sub_breed_record&.id,
-        description: generate_dog_description # Generate a description for the dog
+        description: generate_dog_description
       )
 
       # Associate random traits with the dog
@@ -88,8 +88,8 @@ breeds.each do |breed, sub_breeds|
       else
         puts "Failed to create dog: #{dog.name}. Errors: #{dog.errors.full_messages.join(', ')}"
       end
-    end  # End of dog creation block
+    end  
   else
     puts "Failed to create or find breed: #{breed}. Errors: #{breed_record.errors.full_messages.join(', ')}"
   end
-end  # End of breeds.each block
+end 
